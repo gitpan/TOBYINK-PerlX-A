@@ -1,0 +1,24 @@
+# This file acts as the project's changelog.
+
+@prefix :        <http://usefulinc.com/ns/doap#> .
+@prefix dcs:     <http://ontologi.es/doap-changeset#> .
+@prefix dc:      <http://purl.org/dc/terms/> .
+@prefix dist:    <http://purl.org/NET/cpan-uri/dist/TOBYINK-PerlX-A/> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+
+dist:project :release dist:v_0-000_001 .
+dist:v_0-000_001
+	a               :Version ;
+	dc:issued	"2012-02-17"^^xsd:date ;
+	:revision	"0.000_001"^^xsd:string ;
+	rdfs:label	"Being for the benefit of CPAN Testers" .
+
+## dist:project :release dist:v_1 .
+dist:v_1
+	a               :Version ;
+	dc:issued       "2012-02-18"^^xsd:date ;
+	:revision       "1"^^xsd:string ;
+	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/TOBYINK-PerlX-A-1.tar.gz> ;
+	rdfs:label      "Initial release" .
+

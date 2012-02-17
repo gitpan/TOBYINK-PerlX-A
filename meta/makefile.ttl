@@ -1,0 +1,41 @@
+# This file provides instructions for packaging.
+
+@prefix : <http://purl.org/NET/cpan-uri/terms#> .
+
+# grep -hr '^use' lib/ | cut -d ' ' -f2,3 | sed 's/;//' | sort -u | grep -i '[A-Z]'
+
+<http://purl.org/NET/cpan-uri/dist/TOBYINK-PerlX-A/project>
+	:perl_version_from
+		_:main;
+	:version_from
+		_:main;
+	:readme_from
+		_:main;
+	:test_requires
+		"Test::Exception",
+		"Test::More 0.61";
+	:requires
+		"common::sense 3.4",
+		"DateTimeX::Auto 0",
+		"IO::All::LWP 0",
+		"IO::Handle 0",
+		"Moose::Util 0",
+		"MooseX::Declare 0",
+		"MooseX::Types::DateTime 0",
+		"MooseX::Types::Moose 0",
+		"MooseX::Types::Path::Class 0",
+		"MooseX::Types::URI 0",
+		"Object::Tap 0",
+		"Scalar::Util 0",
+		"Syntax::Collector 0.002",
+		"Syntax::Feature::Function 0",
+		"Syntax::Feature::Io 0",
+		"Syntax::Feature::Maybe 0",
+		"Syntax::Feature::Perform 0",
+		"Syntax::Feature::Ql 0",
+		"TryCatch 0",
+		"Web::Magic 0.006",
+		"XML::LibXML 1.90".  
+
+_:main <http://www.semanticdesktop.org/ontologies/2007/03/22/nfo#fileName> "lib/TOBYINK/PerlX/A.pm" .
+

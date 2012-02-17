@@ -1,0 +1,97 @@
+NAME
+    TOBYINK::PerlX::A - an awesome collection of syntax extensions
+
+SYNOPSIS
+     use TOBYINK::PerlX::A;
+     my $page = web(http://www.example.com/);
+     io('out.html') < $page->content;
+
+DESCRIPTION
+    Using this module, enables all of the following:
+
+            require DateTime 0;
+            use DateTimeX::Auto 0 qw(dt) ;
+            require IO::All::LWP 0;
+            use Moose::Util 0 qw(apply_all_roles);
+            use MooseX::Declare 0 ;
+            use MooseX::Types::DateTime 0 qw(:all);
+            use MooseX::Types::Moose 0 qw(:all);
+            use MooseX::Types::Path::Class 0 qw(Dir File);
+            use MooseX::Types::URI 0 qw(:all);
+            use Scalar::Util 0 'blessed' ;
+            use Syntax::Feature::Function 0 options => { -as => 'function' } ;
+            use Syntax::Feature::Io 0 ;
+            use Syntax::Feature::Maybe 0 ;
+            use Syntax::Feature::Perform 0 ;
+            use Syntax::Feature::Ql 0 ;
+            use TryCatch 0 ;
+            use Web::Magic 0.006 -quotelike => 'web' ;
+            require XML::LibXML 1.90;
+
+    It also enables common::sense 3.4, which selectively enables strict and
+    warnings, and also enables utf8, and the say, state and switch features.
+
+    It exports the following additional functions to your namespace:
+
+    *   "xml $input"
+
+        Parses $input as XML, returning an XML::LibXML::Document object.
+        $input can be an IO::All handle, an IO::Handle, a filehandle, a URI,
+        a Web::Magic object, a Path::Class::File, a string path to an
+        existing file, or a string of well-formed XML.
+
+    A "tap" method (see Object::Tap) is installed into UNIVERSAL.
+
+    Lastly, it overloads "~~" (smart match) on the
+    MooseX::Types::TypeDecorator class to perform a type check, and
+    overloads "%" to coerce values into the given type.
+
+      my $uri = 'http://www.google.com/' % Uri;
+      # $uri is now blessed into the URI class.
+
+    A lot of modules are loaded, so TOBYINK::PerlX::A probably adds quite a
+    lot to your script's memory usage and start-up time. However, it
+    provides a number of useful features to your script, so it may be worth
+    taking the performance hit for those projects where the programmer's
+    performance is more of a bottleneck than the program's performance.
+
+CAVEATS
+    Remember that switching package introduces a new scope...
+
+      use TOBYINK::PerlX::A;
+  
+      class Example::Class1
+      {
+        # new scope
+      }
+
+    Because TOBYINK::PerlX::A would normally fall out of scope within the
+    class definition, it performs a little trickery with MooseX::Declare to
+    ensure that it is automatically re-imported inside the class definition.
+
+    However, this trickery is global. So if you use TOBYINK::PerlX::A, then
+    all classes and roles defined via MooseX::Declare will use
+    TOBYINK::PerlX::A too.
+
+BUGS
+    Please report any bugs to
+    <http://rt.cpan.org/Dist/Display.html?Queue=TOBYINK-PerlX-A>.
+
+SEE ALSO
+    common::sense, syntax, MooseX::Declare, MooseX::Types, IO::All,
+    Web::Magic.
+
+AUTHOR
+    Toby Inkster <tobyink@cpan.org>.
+
+COPYRIGHT AND LICENCE
+    This software is copyright (c) 2012 by Toby Inkster.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
+DISCLAIMER OF WARRANTIES
+    THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+    WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+    MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+

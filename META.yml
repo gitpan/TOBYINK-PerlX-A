@@ -1,0 +1,53 @@
+---
+abstract: 'an awesome collection of syntax extensions'
+author:
+  - 'Toby Inkster <tobyink@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+  Test::Exception: 0
+  Test::More: 0.61
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
+distribution_type: module
+generated_by: 'Module::Install version 1.02'
+keywords: []
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+module_name: TOBYINK::PerlX::A
+name: TOBYINK-PerlX-A
+no_index:
+  directory:
+    - examples
+    - inc
+    - t
+    - xt
+requires:
+  DateTimeX::Auto: 0
+  IO::All::LWP: 0
+  IO::Handle: 0
+  Moose::Util: 0
+  MooseX::Declare: 0
+  MooseX::Types::DateTime: 0
+  MooseX::Types::Moose: 0
+  MooseX::Types::Path::Class: 0
+  MooseX::Types::URI: 0
+  Object::Tap: 0
+  Scalar::Util: 0
+  Syntax::Collector: 0.002
+  Syntax::Feature::Function: 0
+  Syntax::Feature::Io: 0
+  Syntax::Feature::Maybe: 0
+  Syntax::Feature::Perform: 0
+  Syntax::Feature::Ql: 0
+  TryCatch: 0
+  Web::Magic: 0.006
+  XML::LibXML: 1.90
+  common::sense: 3.4
+  perl: 5.10.0
+resources:
+  bugtracker: http://rt.cpan.org/Dist/Display.html?Queue=TOBYINK-PerlX-A
+  homepage: https://metacpan.org/release/TOBYINK-PerlX-A
+  license: http://dev.perl.org/licenses/
+version: 0.000_001
