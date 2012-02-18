@@ -1,36 +1,59 @@
 package TOBYINK::PerlX::A;
 
+###
+### Preamble
+###
 use 5.010;
 use common::sense 3.4;
 
-our @ISA;
-
-BEGIN {
+BEGIN
+{
 	$TOBYINK::PerlX::A::AUTHORITY = 'cpan:TOBYINK';
-	$TOBYINK::PerlX::A::VERSION   = '0.000_001';
-	
-	sub IMPORT
-	{
-		my $caller = caller;
-		foreach my $sub (qw{ xml })
-		{
-			*{"$caller\::$sub"} = \&{$sub};
-		}
-		
-		strict->unimport;
-		warnings->unimport;
-		common::sense->import;
-	}
+	$TOBYINK::PerlX::A::VERSION   = '0.000_002';
 }
 
+###
+### Additional code that will be run after TOBYINK::PerlX::A->import
+###
+sub IMPORT
+{
+	my @EXPORT = (
+		qw{ xml },
+		MooseX::Types::DateTime->type_names,
+		MooseX::Types::Moose->type_names,
+		MooseX::Types::Path::Class->type_names,
+		MooseX::Types::URI->type_names,
+		);
+	my $caller = caller;
+	
+	foreach my $sub (@EXPORT)
+	{
+		*{"$caller\::$sub"} = \&{$sub};
+	}
+
+	# This needs to be done *AFTER* Syntax::Collector, as one
+	# of the 'use' lines (MooseX::Declare probably) enables
+	# strict and warnings in their entirity.
+	strict->unimport;
+	warnings->unimport;
+	common::sense->import;
+}
+
+###
+### Load modules expected by our caller.
+###
+use IO::All::LWP 0 qw//;
+use IO::Handle 0;
+use Object::Tap 0 -package => 'UNIVERSAL';
+
+###
+### Inject these "use" lines into our caller.
+###
 use Syntax::Collector 0.002 -collect => q/
+use Carp 0 qw(carp croak confess);
 use DateTimeX::Auto 0 qw(dt) ;
 use Moose::Util 0 qw(apply_all_roles);
 use MooseX::Declare 0 ;
-use MooseX::Types::DateTime 0 qw(:all);
-use MooseX::Types::Moose 0 qw(:all);
-use MooseX::Types::Path::Class 0 qw(Dir File);
-use MooseX::Types::URI 0 qw(:all);
 use Scalar::Util 0 'blessed' ;
 use Syntax::Feature::Function 0 options => { -as => 'function' } ;
 use Syntax::Feature::Io 0 ;
@@ -41,16 +64,19 @@ use TryCatch 0 ;
 use Web::Magic 0.006 -quotelike => 'web' ;
 /;
 
-use IO::All::LWP 0 qw//;
-use IO::Handle 0;
-use Moose::Util 0 qw/apply_all_roles/;
-use MooseX::Declare 0;
+###
+### Load modules needed directly by TOBYINK::PerlX::A
+###
+use MooseX::Types::DateTime 0 qw(:all);
+use MooseX::Types::Moose 0 qw(:all);
 use MooseX::Types::Path::Class 0 qw(Dir File);
 use MooseX::Types::URI 0 qw(:all);
-use Object::Tap 0 -package => 'UNIVERSAL';
 use Scalar::Util 0 qw(blessed) ;
 use XML::LibXML 1.90 qw();
 
+###
+### Overload MooseX::Types types
+###
 {
 	package MooseX::Types::TypeDecorator;
 	use overload
@@ -66,20 +92,33 @@ use XML::LibXML 1.90 qw();
 		};
 }
 
-role TOBYINK::PerlX::A::MooseXDeclare
-{
-	after add_namespace_customizations ($ctx, $package)
-	{
+###
+### This code applies TOBYINK::PerlX::A to all classes and roles
+### declared using MooseX::Declare.
+###
+BEGIN {
+	use Moose::Util 0 qw();
+	use MooseX::Declare 0;
+	
+	my $use_this = sub {
+		my ($self, $ctx, $package) = @_;
 		$ctx->add_preamble_code_parts('use TOBYINK::PerlX::A');
+	};
+
+	foreach my $kw (qw/
+		MooseX::Declare::Syntax::Keyword::Class
+		MooseX::Declare::Syntax::Keyword::Role
+		/)
+	{
+		$kw->meta->add_before_method_modifier(
+			add_namespace_customizations => $use_this,
+			);
 	}
 }
-
-$INC{'TOBYINK/PerlX/A/MooseXDeclare.pm'} = __FILE__;
-apply_all_roles($_, 'TOBYINK::PerlX::A::MooseXDeclare') foreach qw/
-	MooseX::Declare::Syntax::Keyword::Class
-	MooseX::Declare::Syntax::Keyword::Role
-	/;
-
+	
+###
+### Declare some extra types for use with the xml() function.
+###
 {
 	package TOBYINK::PerlX::A::TypeLib;
 	use MooseX::Types 0 -declare => [qw/
@@ -89,12 +128,13 @@ apply_all_roles($_, 'TOBYINK::PerlX::A::MooseXDeclare') foreach qw/
 	BEGIN {
 		class_type IOAll    => { class => 'IO::All' };
 		class_type IOHandle => { class => 'IO::Handle' };
-		class_type DateTime => { class => 'DateTime' };
 	}
 }
-
 BEGIN { TOBYINK::PerlX::A::TypeLib->import(':all'); }
 
+###
+### Define the xml() function.
+###
 sub xml ($)
 {
 	my ($in, $type) = @_;
@@ -134,15 +174,12 @@ TOBYINK::PerlX::A - an awesome collection of syntax extensions
 
 Using this module, enables all of the following:
 
-	require DateTime 0;
+	use Carp 0 qw(carp croak confess) ;
+	require DateTime 0 ;
 	use DateTimeX::Auto 0 qw(dt) ;
-	require IO::All::LWP 0;
-	use Moose::Util 0 qw(apply_all_roles);
+	require IO::All::LWP 0 ;
+	use Moose::Util 0 qw(apply_all_roles) ;
 	use MooseX::Declare 0 ;
-	use MooseX::Types::DateTime 0 qw(:all);
-	use MooseX::Types::Moose 0 qw(:all);
-	use MooseX::Types::Path::Class 0 qw(Dir File);
-	use MooseX::Types::URI 0 qw(:all);
 	use Scalar::Util 0 'blessed' ;
 	use Syntax::Feature::Function 0 options => { -as => 'function' } ;
 	use Syntax::Feature::Io 0 ;
@@ -151,18 +188,12 @@ Using this module, enables all of the following:
 	use Syntax::Feature::Ql 0 ;
 	use TryCatch 0 ;
 	use Web::Magic 0.006 -quotelike => 'web' ;
-	require XML::LibXML 1.90;
+	require XML::LibXML 1.90 ;
 
 It also enables L<common::sense> 3.4, which selectively enables strict and
 warnings, and also enables utf8, and the say, state and switch features.
 
 It exports the following additional functions to your namespace:
-
-=begin private
-
-=item C<IMPORT>
-
-=end private
 
 =over
 
@@ -176,6 +207,16 @@ an existing file, or a string of well-formed XML.
 =back
 
 A C<tap> method (see L<Object::Tap>) is installed into UNIVERSAL.
+
+It exports the types from the following MooseX::Type libraries:
+
+	use MooseX::Types::DateTime 0 qw(:all) ;
+	use MooseX::Types::Moose 0 qw(:all) ;
+	use MooseX::Types::Path::Class 0 qw(Dir File) ;
+	use MooseX::Types::URI 0 qw(:all) ;
+
+But does not export the corresponding C<is_Foo> and C<to_Foo> functions
+provided by MooseX::Types.
 
 Lastly, it overloads C<~~> (smart match) on the L<MooseX::Types::TypeDecorator>
 class to perform a type check, and overloads C<< % >> to coerce values into
@@ -236,3 +277,8 @@ THIS PACKAGE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
 WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
 MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 
+=begin private
+
+=item C<IMPORT>
+
+=end private

@@ -5,6 +5,9 @@ Created:      2012-02-16
 Home page:    <https://metacpan.org/release/TOBYINK-PerlX-A>
 Bug tracker:  <http://rt.cpan.org/Dist/Display.html?Queue=TOBYINK-PerlX-A>
 
+0.000_002  2012-02-18  # Fix issues with Perl 5.12+
+
+
 0.000_001  2012-02-17  # Being for the benefit of CPAN Testers
 
 

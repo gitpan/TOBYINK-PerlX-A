@@ -10,14 +10,21 @@
 dist:project :release dist:v_0-000_001 .
 dist:v_0-000_001
 	a               :Version ;
-	dc:issued	"2012-02-17"^^xsd:date ;
-	:revision	"0.000_001"^^xsd:string ;
-	rdfs:label	"Being for the benefit of CPAN Testers" .
+	dc:issued       "2012-02-17"^^xsd:date ;
+	:revision       "0.000_001"^^xsd:string ;
+	rdfs:label      "Being for the benefit of CPAN Testers" .
+
+dist:project :release dist:v_0-000_002 .
+dist:v_0-000_002
+	a               :Version ;
+	dc:issued       "2012-02-18"^^xsd:date ;
+	:revision       "0.000_002"^^xsd:string ;
+	rdfs:label      "Fix issues with Perl 5.12+" .
 
 ## dist:project :release dist:v_1 .
 dist:v_1
 	a               :Version ;
-	dc:issued       "2012-02-18"^^xsd:date ;
+	dc:issued       "2012-02-20"^^xsd:date ;
 	:revision       "1"^^xsd:string ;
 	:file-release   <http://backpan.cpan.org/authors/id/T/TO/TOBYINK/TOBYINK-PerlX-A-1.tar.gz> ;
 	rdfs:label      "Initial release" .

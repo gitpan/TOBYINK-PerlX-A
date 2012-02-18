@@ -24,6 +24,7 @@ no_index:
     - t
     - xt
 requires:
+  Carp: 0
   DateTimeX::Auto: 0
   IO::All::LWP: 0
   IO::Handle: 0
@@ -50,4 +51,4 @@ resources:
   bugtracker: http://rt.cpan.org/Dist/Display.html?Queue=TOBYINK-PerlX-A
   homepage: https://metacpan.org/release/TOBYINK-PerlX-A
   license: http://dev.perl.org/licenses/
-version: 0.000_001
+version: 0.000_002

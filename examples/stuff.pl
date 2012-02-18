@@ -1,9 +1,11 @@
 use TOBYINK::PerlX::A;
-use Data::Dumper;
 
-my $u = q<http://www.google.com/> % Uri;
-print Dumper($u);
+function uri_test ($x)
+{
+	say(($x ~~ Uri) ? 'it is a URI' : 'it is not');
+}
 
-say(($u ~~ Uri) ? 'it is a URI' : 'it is not');
+my $u = q<http://www.google.com/>;
 
-my $x;
+uri_test($u);
+uri_test($u % Uri);
