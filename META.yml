@@ -37,6 +37,7 @@ requires:
   Object::Tap: 0
   Scalar::Util: 0
   Syntax::Collector: 0.002
+  Syntax::Feature::Dispatcher: 0
   Syntax::Feature::Function: 0
   Syntax::Feature::Io: 0
   Syntax::Feature::Maybe: 0
@@ -51,4 +52,4 @@ resources:
   bugtracker: http://rt.cpan.org/Dist/Display.html?Queue=TOBYINK-PerlX-A
   homepage: https://metacpan.org/release/TOBYINK-PerlX-A
   license: http://dev.perl.org/licenses/
-version: 0.000_002
+version: 1

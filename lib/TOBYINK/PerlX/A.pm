@@ -9,7 +9,7 @@ use common::sense 3.4;
 BEGIN
 {
 	$TOBYINK::PerlX::A::AUTHORITY = 'cpan:TOBYINK';
-	$TOBYINK::PerlX::A::VERSION   = '0.000_002';
+	$TOBYINK::PerlX::A::VERSION   = '1';
 }
 
 ###
@@ -55,6 +55,7 @@ use DateTimeX::Auto 0 qw(dt) ;
 use Moose::Util 0 qw(apply_all_roles);
 use MooseX::Declare 0 ;
 use Scalar::Util 0 'blessed' ;
+use Syntax::Feature::Dispatcher 0 ;
 use Syntax::Feature::Function 0 options => { -as => 'function' } ;
 use Syntax::Feature::Io 0 ;
 use Syntax::Feature::Maybe 0 ;
@@ -181,6 +182,7 @@ Using this module, enables all of the following:
 	use Moose::Util 0 qw(apply_all_roles) ;
 	use MooseX::Declare 0 ;
 	use Scalar::Util 0 'blessed' ;
+	use Syntax::Feature::Dispatcher 0 ;
 	use Syntax::Feature::Function 0 options => { -as => 'function' } ;
 	use Syntax::Feature::Io 0 ;
 	use Syntax::Feature::Maybe 0 ;

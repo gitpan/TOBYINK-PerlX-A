@@ -22,6 +22,7 @@ dist:v_0-000_002
 	rdfs:label      "Fix issues with Perl 5.12+" .
 
 ## dist:project :release dist:v_1 .
+dist:project :release dist:v_1 .
 dist:v_1
 	a               :Version ;
 	dc:issued       "2012-02-20"^^xsd:date ;

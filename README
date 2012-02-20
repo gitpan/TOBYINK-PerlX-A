@@ -16,6 +16,7 @@ DESCRIPTION
             use Moose::Util 0 qw(apply_all_roles) ;
             use MooseX::Declare 0 ;
             use Scalar::Util 0 'blessed' ;
+            use Syntax::Feature::Dispatcher 0 ;
             use Syntax::Feature::Function 0 options => { -as => 'function' } ;
             use Syntax::Feature::Io 0 ;
             use Syntax::Feature::Maybe 0 ;
